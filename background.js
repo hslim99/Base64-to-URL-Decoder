@@ -13,6 +13,11 @@ let decodeB64toURL = function(b64) {
     }
 }
 
+let checkValidURL = function(url) {
+    var pattern = new RegExp('^(https?:\\/\\/)?([-a-zA-Z0-9]+\\.)+([-a-zA-Z]{2,}\\/?)');
+    return pattern.test(url);
+}
+
 let openDecodedURL = function(word) {
     chrome.tabs.create({url: url});
 }
@@ -20,7 +25,8 @@ let openDecodedURL = function(word) {
 chrome.runtime.onMessage.addListener(
     function(msg, sender, sendResponse) {
         if (msg.request === "updateContextMenu") {
-            if (msg.selection == '') {
+            decodeB64toURL(msg.selection);
+            if (msg.selection == '' || !checkValidURL(url)) {
                 if (cmid != null) {
                     chrome.contextMenus.remove(cmid);
                     cmid = null;
