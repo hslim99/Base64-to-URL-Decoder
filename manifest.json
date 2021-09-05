@@ -9,10 +9,10 @@
     },
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
-        "js": ["content.js"]
+        "js": ["js/content.js"]
     }],
-    "permissions": ["contextMenus"],
+    "permissions": ["contextMenus", "clipboardWrite"],
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["js/background.js"]
     }
 }
